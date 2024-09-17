@@ -129,6 +129,11 @@
     background-color: rgba(0, 68, 255, 0.808);
     animation: cursor 0.49s alternate infinite;
     border-radius: 3px;
+    z-index: 1;
+    display: flex;
+    position: relative;
+    top: 5%;
+    left: 95%;
 }
 
 @keyframes cursor {
