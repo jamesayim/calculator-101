@@ -120,6 +120,7 @@
 }
 .percentage, .delete {
     color:rgb(251, 255, 0);
+    font-size: 27px;
 }
 
 /* blinking cursor */
