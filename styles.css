@@ -95,7 +95,8 @@
 .display {
     display: flex;
     flex-direction: row-reverse;
-    flex-wrap: nowrap;
+    overflow-wrap: anywhere;
+    flex-wrap: wrap;
     background-color: rgba(24, 24, 24, 0.555);
     height: 120px;
     width: 406px;
