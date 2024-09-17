@@ -103,3 +103,25 @@ zero.addEventListener("click", () => {
     displayValue += 0;
     display.textContent = displayValue;
 });
+
+const percentageSign = document.querySelector(".percentage").addEventListener("click", () => {
+    displayValue += "%";
+    display.textContent = displayValue;
+});
+
+const divideElement = document.querySelector(".divide").addEventListener("click", () => {
+    displayValue += "/";
+    display.textContent = displayValue;
+});
+const addElement = document.querySelector(".add").addEventListener("click", () => {
+    displayValue += "+";
+    display.textContent = displayValue;
+});
+const subtractElement = document.querySelector(".subtract").addEventListener("click", () => {
+    displayValue += "-";
+    display.textContent = displayValue;
+});
+const multiplyElement = document.querySelector(".multiply").addEventListener("click", () => {
+    displayValue += "*";
+    display.textContent = displayValue;
+});
