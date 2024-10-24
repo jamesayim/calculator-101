@@ -22,7 +22,7 @@ function divide(a, b) {
 }
 
 //  Operation function
-function operate(num1, op, num2) {
+function operate(num1, op, num2 = 0) {
     switch (op) {
         case "+":
             return add(num1, num2);
@@ -31,7 +31,7 @@ function operate(num1, op, num2) {
         case "/":
             return num2 !== 0 ? divide(num1, num2) : "Error";
         case "%":
-            return num1 % num2;
+            return num1 / 100;
         case "*":
             return multiply(num1, num2);
         default:
@@ -125,9 +125,13 @@ zero.addEventListener("click", () => {
 
 //  Percentage
 const percentageSign = document.querySelector(".percentage").addEventListener("click", () => {
-    displayValue += "%";
-    operator = "%";
-    display.textContent = displayValue;
+    if (displayValue !== "") {
+        let currenNumber = parseFloat(displayValue);
+        result = currenNumber / 100;
+        display.textContent = result;
+        firstNumber = result;
+        operator = "%";
+    }
 });
 
 //  Operators
@@ -188,17 +192,15 @@ const equalElement = document.querySelector(".equal");
 //  Add event listener on equal button
 equalElement.addEventListener("click", () => {
     if (operator !== null && firstNumber !== null && displayValue !== "") {
+        if (operator === "%") {
+            result = displayValue;
+    } else {
         secondNumber = displayValue; //  Capture the content of the display as the second number
-
-    //  Converting numbers strings to actual numbers
-    let fNumber = parseFloat(firstNumber);
-    let sNumber = parseFloat(secondNumber);
-    console.log("First Number: ", fNumber);
-    console.log("Operator: ", operator);
-    console.log("Second Number: ", sNumber);
-
-    //  Performs the operation and store in Result variable
-    result = operate(fNumber, operator, sNumber);
+        let fNumber = parseFloat(firstNumber); //  Converting numbers strings to actual numbers
+        let sNumber = parseFloat(secondNumber);
+        
+        result = operate(fNumber, operator, sNumber);
+    }
 
     //  Update the display with the result 
     display.textContent = result;
