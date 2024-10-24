@@ -1,42 +1,48 @@
-// declarations of global variables
+//  Declarations of global variables
 let firstNumber = null;
 let operator = null;
 let secondNumber = null;
 let result = null;
 let hasCalculated;
 
-function add(num1, num2) {
-    return num1 + num2;
+function add(a, b) {
+    return a + b;
 }
 
-function subtract(num1, num2) {
-    return num1 - num2;
+function subtract(a, b) {
+    return a - b;
 }
 
-function multiply(num1, num2) {
-    return num1 * num2;
+function multiply(a, b) {
+    return a * b;
 }
 
-function divide(num1, num2) {
-    return num1 / num2;
+function divide(a, b) {
+    return a / b;
 }
 
+//  Operation function
 function operate(num1, op, num2) {
-    if (op === "+") {
-        return add(num1, num2);
-    } else if (op === "-") {
-        return subtract(num1, num2);
-    } else if (op === "*") {
-        return multiply(num1, num2);
-    } else if (op === "/") {
-        return divide(num1, num2);
+    switch (op) {
+        case "+":
+            return add(num1, num2);
+        case "-":
+            return subtract(num1, num2);
+        case "/":
+            return num2 !== 0 ? divide(num1, num2) : "Error";
+        case "%":
+            return num1 % num2;
+        case "*":
+            return multiply(num1, num2);
+        default:
+            return "Error";
     }
 }
 
-// querying the display element
+//  Querying the display element
 const display = document.querySelector(".display");
 
-// querying the number elements
+//  Querying the number elements
 const one = document.querySelector(".one");
 const two = document.querySelector(".two");
 const three = document.querySelector(".three");
@@ -49,23 +55,27 @@ const nine = document.querySelector(".nine");
 const zero = document.querySelector(".zero");
 const del = document.querySelector(".delete");
 
-// dot
+//  Decimal point
 const dot = document.querySelector(".dot").addEventListener("click", () => {
     displayValue += ".";
     display.textContent = displayValue;
 });
 
-// clear
+//  Capturing clear button and listening to it's event by click
 const clear = document.querySelector(".clear").addEventListener("click", () => {
     displayValue = "";
-    display.textContent = displayValue;
+    display.textContent = "";
+    firstNumber = null;
+    secondNumber = null;
+    operator = null;
+    result = null;
+    hasCalculated = false;
 });
 
-// declaration of display value and display result
+//  Declaration of display value variable
 let displayValue = "";
-let displayResult;
 
-// numbers
+//  Numbers
 one.addEventListener("click", () => {
     displayValue += 1;
     display.textContent = displayValue;
@@ -113,17 +123,17 @@ zero.addEventListener("click", () => {
     display.textContent = displayValue;
 });
 
-//percentage
+//  Percentage
 const percentageSign = document.querySelector(".percentage").addEventListener("click", () => {
     displayValue += "%";
     operator = "%";
     display.textContent = displayValue;
 });
 
-//operators
+//  Operators
 const divideElement = document.querySelector(".divide");
 
-// addEvent for divide element
+//  addEvent for divide element
 divideElement.addEventListener("click", () => {
     displayValue += "/";
     operator = "/";
@@ -157,10 +167,10 @@ multiplyElement.addEventListener("click", () => {
     display.textContent = displayValue;
 });
 
-// All operators elements
+//  All operators elements
 const opButtons = document.querySelectorAll(".op");
 
-// All buttons for storing values in a variable and update display
+//  All buttons for storing values in a variable and update display
 opButtons.forEach(button => {
     button.addEventListener("click", () => {
         if (!hasCalculated && firstNumber === null) {
@@ -172,35 +182,29 @@ opButtons.forEach(button => {
     });
 });
 
-// Querying the "equals to" element
+//  Querying the "equals to" element
 const equalElement = document.querySelector(".equal");
 
-// Add event listener on equal button
+//  Add event listener on equal button
 equalElement.addEventListener("click", () => {
     if (operator !== null && firstNumber !== null && displayValue !== "") {
-    secondNumber = displayValue; // capture the content of the display as the second number
+        secondNumber = displayValue; //  Capture the content of the display as the second number
 
     //  Converting numbers strings to actual numbers
     let fNumber = parseFloat(firstNumber);
     let sNumber = parseFloat(secondNumber);
+    console.log("First Number: ", fNumber);
+    console.log("Operator: ", operator);
+    console.log("Second Number: ", sNumber);
 
-    //  Call the operate function store the result
+    //  Performs the operation and store in Result variable
     result = operate(fNumber, operator, sNumber);
 
-    // Update the display with the result 
+    //  Update the display with the result 
     display.textContent = result;
     displayValue = result;
+    firstNumber = result;
     operator = null;
     secondNumber = null;
     hasCalculated = true;
-    firstNumber = result;
 }});
-
-opButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        if (hasCalculated && firstNumber === null) {
-            firstNumber = result;
-            console.log(firstNumber);
-        }
-    });
-});
