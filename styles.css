@@ -82,6 +82,9 @@
 .op {
     color: rgb(251, 255, 0);
 }
+.delete {
+    color: rgb(0, 110, 255) !important;
+}
 
 .op:hover {
     color: rgba(0, 0, 0);
