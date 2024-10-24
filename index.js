@@ -4,6 +4,7 @@ let operator = null;
 let secondNumber = null;
 let result = null;
 let hasCalculated;
+let dotUsed = false;
 
 function add(a, b) {
     return a + b;
@@ -55,13 +56,16 @@ const nine = document.querySelector(".nine");
 const zero = document.querySelector(".zero");
 const del = document.querySelector(".delete");
 
-//  Decimal point
+//  Dot / Decimal point
 const dot = document.querySelector(".dot").addEventListener("click", () => {
-    displayValue += ".";
-    display.textContent = displayValue;
+    if (!dotUsed) {
+        displayValue += ".";
+        display.textContent = displayValue;
+        dotUsed = true;
+    }
 });
 
-//  Capturing clear button and listening to it's event by click
+//  Capturing Clear button and listening to it's event by click
 const clear = document.querySelector(".clear").addEventListener("click", () => {
     displayValue = "";
     display.textContent = "";
@@ -70,6 +74,7 @@ const clear = document.querySelector(".clear").addEventListener("click", () => {
     operator = null;
     result = null;
     hasCalculated = false;
+    dotUsed = false;
 });
 
 //  Declaration of display value variable
@@ -183,10 +188,11 @@ opButtons.forEach(button => {
         operator = button.textContent;
         displayValue = "";
         display.textContent = operator; // optionally showing the operator
+        dotUsed = false;
     });
 });
 
-//  Querying the "equals to" element
+//  Capture "Equals" element
 const equalElement = document.querySelector(".equal");
 
 //  Add event listener on equal button
@@ -209,4 +215,11 @@ equalElement.addEventListener("click", () => {
     operator = null;
     secondNumber = null;
     hasCalculated = true;
+
+    if (String(result).includes(".")) {
+        dotUsed = true;
+    } else {
+        dotUsed = false;
+    }
 }});
+
