@@ -56,17 +56,34 @@ const nine = document.querySelector(".nine");
 const zero = document.querySelector(".zero");
 const del = document.querySelector(".delete");
 
-//  Dot / Decimal point
-const dot = document.querySelector(".dot").addEventListener("click", () => {
+const handleDotInput = () => {  //  Function for handling dot input
     if (!dotUsed) {
         displayValue += ".";
         display.textContent = displayValue;
-        dotUsed = true;
+        dotUsed = true
+    }
+};
+
+//  Dot / Decimal point
+const dot = document.querySelector(".dot"); 
+
+dot.addEventListener("click", () => {  //  Click event for dot button
+    handleDotInput();
+    dot.blur();
+}); 
+
+document.addEventListener("keydown", (event) => { //  Keydown event for dot button
+    if (event.key === "." && !dotUsed) {
+        event.preventDefault();
+        handleDotInput();
+        document.activeElement.blur();
     }
 });
 
 //  Capturing Clear button and listening to it's event by click
-const clear = document.querySelector(".clear").addEventListener("click", () => {
+const clear = document.querySelector(".clear");
+
+const handleClearInput = () => {  //  Function for handling clear inputs
     displayValue = "";
     display.textContent = "";
     firstNumber = null;
@@ -75,61 +92,117 @@ const clear = document.querySelector(".clear").addEventListener("click", () => {
     result = null;
     hasCalculated = false;
     dotUsed = false;
+};
+
+clear.addEventListener("click", () => {  //  Click event for clear
+    handleClearInput();
+    clear.blur();
+});
+
+document.addEventListener("keydown", (event) => {  //  Keydown event for clear
+    if (event.key === "Escape") {
+        event.preventDefault();
+        handleClearInput();
+        document.activeElement.blur();
+    }
 });
 
 //  Declaration of display value variable
 let displayValue = "";
 
-//  Numbers
-one.addEventListener("click", () => {
+//  Number buttons and other buttons
+function handleOneInput() {
     displayValue += 1;
     display.textContent = displayValue;
-});
+    one.blur();
+}
+one.addEventListener("click", handleOneInput);
 
-del.addEventListener("click", () => {
+function handleDelInput() {
     displayValue = display.textContent.slice(0, -1);
     display.textContent = displayValue;
+    del.blur();
+}
+
+del.addEventListener("click", handleDelInput);
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Backspace") {
+        event.preventDefault();
+        handleDelInput();
+        document.activeElement.blur();
+    }
 });
 
-two.addEventListener("click", () => {
+function handleTwoInput() {
     displayValue += 2;
     display.textContent = displayValue;
-})
-three.addEventListener("click", () => {
+    two.blur();
+}
+
+two.addEventListener("click", handleTwoInput);
+
+function handleThreeInput() {
     displayValue += 3;
     display.textContent = displayValue;
-});
-four.addEventListener("click", () => {
+    three.blur();
+}
+
+three.addEventListener("click", handleThreeInput);
+
+function handleFourInput() {
     displayValue += 4;
     display.textContent = displayValue;
-});
-five.addEventListener("click", () => {
+    four.blur();
+}
+four.addEventListener("click", handleFourInput);
+
+function handleFiveInput() {
     displayValue += 5;
     display.textContent = displayValue;
-});
-six.addEventListener("click", () => {
+    five.blur();
+}
+five.addEventListener("click", handleFiveInput);
+
+function handleSixInput() {
     displayValue += 6;
     display.textContent = displayValue;
-});
-seven.addEventListener("click", () => {
+    six.blur();
+}
+six.addEventListener("click", handleSixInput);
+
+function handleSevenInput() {
     displayValue += 7;
     display.textContent = displayValue;
-});
-eight.addEventListener("click", () => {
+    seven.blur();
+}
+seven.addEventListener("click", handleSevenInput);
+
+function handleEightInput() {
     displayValue += 8;
     display.textContent = displayValue;
-});
-nine.addEventListener("click", () => {
+    eight.blur();
+}
+eight.addEventListener("click", handleEightInput);
+
+
+function handleNineInput() {
     displayValue += 9;
     display.textContent = displayValue;
-});
-zero.addEventListener("click", () => {
+    nine.blur();
+}
+nine.addEventListener("click", handleNineInput);
+
+function handleZeroInput() {
     displayValue += 0;
     display.textContent = displayValue;
-});
+    zero.blur();
+}
+zero.addEventListener("click", handleZeroInput);
 
 //  Percentage
-const percentageSign = document.querySelector(".percentage").addEventListener("click", () => {
+const percentageSign = document.querySelector(".percentage");
+
+function handlePercentInput() {
     if (displayValue !== "") {
         let currenNumber = parseFloat(displayValue);
         result = currenNumber / 100;
@@ -137,60 +210,154 @@ const percentageSign = document.querySelector(".percentage").addEventListener("c
         firstNumber = result;
         operator = "%";
     }
+}
+
+percentageSign.addEventListener("click", handlePercentInput);
+document.addEventListener("keydown", (event) => {
+    if (event.key === "%") {
+        event.preventDefault();
+        handlePercentInput();
+        document.activeElement.blur();
+    }
 });
 
 //  Operators
 const divideElement = document.querySelector(".divide");
 
 //  addEvent for divide element
-divideElement.addEventListener("click", () => {
+
+function handleDivideInput() {
     displayValue += "/";
     operator = "/";
     display.textContent = displayValue;
+}
+
+divideElement.addEventListener("click", handleDivideInput);
+document.addEventListener("keydown", (event) => {
+    if (event.key === "/") {
+        event.preventDefault();
+        handleDivideInput();
+        document.activeElement.blur();   
+    }
 });
 
 // Captured the addElement
 const addElement = document.querySelector(".add"); 
 
-// addEvent for add element
-addElement.addEventListener("click", () => {
+function handleAddInput() {
     displayValue += "+";
     operator = "+";
     display.textContent = displayValue;
+}
+
+// addEvent for add element
+addElement.addEventListener("click", handleAddInput);
+document.addEventListener("keydown", (event) => {
+    if (event.key === "+") {
+        event.preventDefault();
+        handleAddInput();
+        document.activeElement.blur();
+    }
 });
 
 const subtractElement = document.querySelector(".subtract"); 
-// addEvent for subtract element
-subtractElement.addEventListener("click", () => {
+
+function handleSubtractInput() {
     displayValue += "-";
     operator = "-";
     display.textContent = displayValue;
+}
+
+subtractElement.addEventListener("click", handleSubtractInput)  //  Click event for subtract button
+document.addEventListener("keydown", (event) => {
+    if (event.key === "-") {
+        event.preventDefault();
+        handleSubtractInput();
+        document.activeElement.blur();
+    }
 });
 
 const multiplyElement = document.querySelector(".multiply");
 
-// addEvent for multiply element
-multiplyElement.addEventListener("click", () => {
+function handleMultiplyInput() {
     displayValue += "*";
     operator = "*";
     display.textContent = displayValue;
+}
+
+// addEvent for multiply element
+multiplyElement.addEventListener("click", handleMultiplyInput);
+document.addEventListener("keydown", (event) => {
+    if (event.key === "*") {
+        event.preventDefault();
+        handleMultiplyInput();
+        document.activeElement.blur();
+    }
 });
 
 //  All operators elements
 const opButtons = document.querySelectorAll(".op");
 
-//  All buttons for storing values in a variable and update display
-opButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        if (!hasCalculated && firstNumber === null) {
-            firstNumber = display.textContent;
-        };
-        operator = button.textContent;
-        displayValue = "";
-        display.textContent = operator; // optionally showing the operator
-        dotUsed = false;
-    });
-});
+    opButtons.forEach(button => {  //  All buttons for storing values in a variable and update display
+        button.addEventListener("click", () => {
+            if (!hasCalculated && firstNumber === null) {
+                firstNumber = display.textContent;
+            };
+            operator = button.textContent;
+            displayValue = "";
+            display.textContent = operator; // optionally showing the operator
+            dotUsed = false;
+            button.blur();
+        });
+    });  
+
+const keys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Backspace", "Escape", ".", "+", "-", "/", "*", "%", "Enter"];
+const opKeys = ["+", "-", "/", "*", "%"];
+document.addEventListener("keydown", (event) => {
+    if (keys.includes(event.key)) {
+        event.preventDefault();
+
+        if (event.key >= "0" && event.key <= "9") {
+            displayValue += event.key;
+            display.textContent = displayValue;
+            document.activeElement.blur();
+        } 
+        else if (opKeys.includes(event.key)) {
+            firstNumber = displayValue;
+            operator = event.key;
+            displayValue = "";
+            display.textContent = operator;
+            document.activeElement.blur();
+        } 
+        else if (event.key === "Enter") {
+            if (operator !== null && firstNumber !== null && displayValue !== "") {
+                if (operator === "%") {
+                    result = displayValue;
+            } else {
+                secondNumber = displayValue; //  Capture the content of the display as the second number
+                let fNumber = parseFloat(firstNumber); //  Converting numbers strings to actual numbers
+                let sNumber = parseFloat(secondNumber);
+                
+                result = operate(fNumber, operator, sNumber);
+            }
+        
+            //  Update the display with the result 
+            display.textContent = result;
+            displayValue = result;
+            firstNumber = result;
+            operator = null;
+            secondNumber = null;
+            hasCalculated = true;
+        
+            if (String(result).includes(".")) {
+                dotUsed = true;
+            } else {
+                dotUsed = false;
+            }
+            document.activeElement.blur();
+        }
+    }
+}});
 
 //  Capture "Equals" element
 const equalElement = document.querySelector(".equal");
@@ -222,4 +389,3 @@ equalElement.addEventListener("click", () => {
         dotUsed = false;
     }
 }});
-
