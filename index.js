@@ -56,6 +56,9 @@ const nine = document.querySelector(".nine");
 const zero = document.querySelector(".zero");
 const del = document.querySelector(".delete");
 
+//  Dot / Decimal point
+const dot = document.querySelector(".dot"); 
+
 const handleDotInput = () => {  //  Function for handling dot input
     if (!dotUsed) {
         displayValue += ".";
@@ -64,20 +67,9 @@ const handleDotInput = () => {  //  Function for handling dot input
     }
 };
 
-//  Dot / Decimal point
-const dot = document.querySelector(".dot"); 
-
 dot.addEventListener("click", () => {  //  Click event for dot button
     handleDotInput();
     dot.blur();
-}); 
-
-document.addEventListener("keydown", (event) => { //  Keydown event for dot button
-    if (event.key === "." && !dotUsed) {
-        event.preventDefault();
-        handleDotInput();
-        document.activeElement.blur();
-    }
 });
 
 //  Capturing Clear button and listening to it's event by click
@@ -203,23 +195,18 @@ zero.addEventListener("click", handleZeroInput);
 const percentageSign = document.querySelector(".percentage");
 
 function handlePercentInput() {
-    if (displayValue !== "") {
-        let currenNumber = parseFloat(displayValue);
-        result = currenNumber / 100;
-        display.textContent = result;
-        firstNumber = result;
-        operator = "%";
+    if (displayValue) {
+        displayValue = (parseFloat(displayValue) / 100).toString();
+        display.textContent = displayValue;
+
+        if (!operator) {
+            firstNumber = displayValue;
+        } else {
+            secondNumber = displayValue;
+        }
     }
 }
-
 percentageSign.addEventListener("click", handlePercentInput);
-document.addEventListener("keydown", (event) => {
-    if (event.key === "%") {
-        event.preventDefault();
-        handlePercentInput();
-        document.activeElement.blur();
-    }
-});
 
 //  Operators
 const divideElement = document.querySelector(".divide");
@@ -311,8 +298,8 @@ const opButtons = document.querySelectorAll(".op");
         });
     });  
 
-const keys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Backspace", "Escape", ".", "+", "-", "/", "*", "%", "Enter"];
-const opKeys = ["+", "-", "/", "*", "%"];
+const keys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Backspace", ".", "Escape", "+", "-", "/", "*", "%", "Enter"];
+const opKeys = ["+", "-", "/", "*"];
 document.addEventListener("keydown", (event) => {
     if (keys.includes(event.key)) {
         event.preventDefault();
@@ -327,8 +314,18 @@ document.addEventListener("keydown", (event) => {
             operator = event.key;
             displayValue = "";
             display.textContent = operator;
+            dotUsed = false;
             document.activeElement.blur();
         } 
+        else if (event.key === "%") {
+            handlePercentInput();
+            document.activeElement.blur();
+        }
+        else if (event.key === "." && !dotUsed) {
+            displayValue += event.key;
+            display.textContent = displayValue;
+            dotUsed = true;
+        }
         else if (event.key === "Enter") {
             if (operator !== null && firstNumber !== null && displayValue !== "") {
                 if (operator === "%") {
@@ -358,6 +355,8 @@ document.addEventListener("keydown", (event) => {
         }
     }
 }});
+
+
 
 //  Capture "Equals" element
 const equalElement = document.querySelector(".equal");
